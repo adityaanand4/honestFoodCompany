@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+    <title>Honest food company assgnment</title>
+    <script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.min.js"></script>
+    </head>
+<body  ng-app="myApp" >
+    <h1>Honest food company assgnment</h1>
+    Enter the address to search 
+     <div ng-controller="address_controller">
+    <input type="text" ng-model="addressString" />
+    <button ng-click="buttonClick()" >OK</button>
+        <h1>{{message}}</h1>
+    </div>
+    <script>
+        var ngApp = angular.module('myApp', []);
+
+        ngApp.controller('address_controller', function ($scope,$http) {
+        	$scope.buttonClick = function(){
+        	var addressString = $scope.addressString;
+        	if(addressString=="" || addressString == undefined){
+        	 $scope.message = "Empty input"
+        	}else{
+        		addressString= addressString.split(" ").join("+")
+        		console.log(addressString);
+        		$http({url:'https://maps.googleapis.com/maps/api/geocode/JSON?address='+addressString+'+CA&key=AIzaSyCjh0-lNyZAFA7uctDM4mG2-5D_yuHNubc',
+        			method:'JSONP'}).then(function(response){
+        			response.header("Access-Control-Allow-Origin", "*");
+        			
+        		});
+        	}
+        }
+        });
+    </script>
+</body>
+</html> 
